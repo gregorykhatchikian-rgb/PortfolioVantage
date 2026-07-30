@@ -1,0 +1,12 @@
+# Core pipeline
+openai>=1.60.0          # used as the client for NVIDIA's OpenAI-compatible endpoint
+python-dotenv>=1.0.1
+pandas>=2.2.0
+requests>=2.32.0
+
+# Dashboard (Phase 5)
+streamlit>=1.40.0
+
+# Price data (Phase 6) - pinned deliberately: yfinance scrapes Yahoo and breaks
+# without warning when Yahoo changes their site. See plan.md section 6.
+yfinance==0.2.66

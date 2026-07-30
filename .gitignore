@@ -1,0 +1,19 @@
+# Secrets - never commit
+.env
+.env.save
+*.key
+
+# Python
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Local data + caches (transcripts are re-fetchable, don't bloat the repo)
+data/cache/
+data/transcripts/
+*.sqlite
+*.db
+
+# OS
+.DS_Store
