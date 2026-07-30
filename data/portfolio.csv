@@ -1,0 +1,9 @@
+ticker,shares,weight
+AAPL,50,0.15
+NVDA,30,0.22
+MSFT,40,0.14
+JPM,65,0.12
+XOM,120,0.09
+PG,55,0.08
+TSLA,25,0.11
+CRM,35,0.09
