@@ -18,6 +18,11 @@ NVIDIA_API_KEY = os.getenv("NVIDIA_API_KEY", "").strip()
 NVIDIA_BASE_URL = os.getenv("NVIDIA_BASE_URL", "https://integrate.api.nvidia.com/v1").strip()
 NVIDIA_MODEL = os.getenv("NVIDIA_MODEL", "meta/llama-3.3-70b-instruct").strip()
 
+ALPHAVANTAGE_API_KEY = os.getenv("ALPHAVANTAGE_API_KEY", "").strip()
+
+# Kept for reference only. The FMP key carried over from DividendPredict returns 401
+# on every endpoint including /v3/quote, so it is expired rather than tier-limited,
+# and Phase 2 uses AlphaVantage instead.
 FMP_API_KEY = os.getenv("FMP_API_KEY", "").strip()
 
 
@@ -42,6 +47,17 @@ def require_nvidia_key() -> str:
             "into .env. Do not run with a fabricated key."
         )
     return NVIDIA_API_KEY
+
+
+def require_alphavantage_key() -> str:
+    if not ALPHAVANTAGE_API_KEY or ALPHAVANTAGE_API_KEY.startswith("xxx"):
+        raise MissingKeyError(
+            "ALPHAVANTAGE_API_KEY is not set in .env (or is still the placeholder from "
+            ".env.example). Get a free key instantly at "
+            "https://www.alphavantage.co/support/#api-key and paste it into .env. "
+            "The public 'demo' key only works for a handful of sample symbols."
+        )
+    return ALPHAVANTAGE_API_KEY
 
 
 def require_fmp_key() -> str:
