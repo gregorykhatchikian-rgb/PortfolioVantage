@@ -90,6 +90,16 @@ def check_auth(client) -> bool:
             return report(
                 "API key accepted by NVIDIA", True, "429 rate limited, but credentials are valid"
             )
+        if type(exc).__name__ in ("APITimeoutError", "APIConnectionError"):
+            # Reporting PASS here would be the same mistake the catalog check made:
+            # "not rejected" is not "working". A model that accepts a request and
+            # never generates must fail loudly.
+            return report(
+                "API key accepted by NVIDIA", False,
+                f"{type(exc).__name__} - the endpoint accepted the request but did not "
+                f"respond. Often means model '{config.NVIDIA_MODEL}' is unavailable "
+                f"rather than a key problem; try another id from the catalog.",
+            )
         # Any other error is not an auth verdict - let the later checks characterise it.
         return report("API key accepted by NVIDIA", True, f"no auth rejection ({type(exc).__name__})")
 
@@ -157,7 +167,9 @@ def main() -> int:
         print("\nRESULT: FAIL")
         return 1
 
-    client = OpenAI(base_url=config.NVIDIA_BASE_URL, api_key=config.require_nvidia_key())
+    # Bounded so an unresponsive model fails this check instead of hanging the run.
+    client = OpenAI(base_url=config.NVIDIA_BASE_URL, api_key=config.require_nvidia_key(),
+                    timeout=60.0, max_retries=0)
 
     if not check_auth(client):
         # Everything downstream is meaningless with a rejected key - don't run it and
