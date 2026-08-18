@@ -1,0 +1,21 @@
+{
+  "ticker": "MSFT",
+  "quarter": "2026Q1",
+  "sentiment_score": 0.8,
+  "sentiment_label": "very confident",
+  "themes": [
+    "ai adoption",
+    "cloud growth",
+    "capacity constraints",
+    "investment in ai"
+  ],
+  "notable_shift": "Management's tone shifted towards increased confidence in AI adoption and its impact on the company's growth, while also acknowledging capacity constraints and the need for continued investment in AI.",
+  "confidence": "high",
+  "model_label": "very confident",
+  "_source": {
+    "word_count": 8396,
+    "segments": 33,
+    "attempts": 1,
+    "retry_reasons": []
+  }
+}

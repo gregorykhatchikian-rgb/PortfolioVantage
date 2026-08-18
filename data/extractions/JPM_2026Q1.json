@@ -1,0 +1,20 @@
+{
+  "ticker": "JPM",
+  "quarter": "2026Q1",
+  "sentiment_score": 0.55,
+  "sentiment_label": "confident",
+  "themes": [
+    "basel iii capital proposal",
+    "private credit",
+    "ai and digital assets"
+  ],
+  "notable_shift": "Management's tone on the Basel III capital proposal and G-SIB surcharge has become more critical, emphasizing the potential negative impact on the bank's competitiveness and the cost of credit for U.S. households and businesses.",
+  "confidence": "high",
+  "model_label": "confident",
+  "_source": {
+    "word_count": 11402,
+    "segments": 87,
+    "attempts": 1,
+    "retry_reasons": []
+  }
+}

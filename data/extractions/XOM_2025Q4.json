@@ -1,0 +1,23 @@
+{
+  "ticker": "XOM",
+  "quarter": "2025Q4",
+  "sentiment_score": 0.8,
+  "sentiment_label": "very confident",
+  "themes": [
+    "upstream growth",
+    "technology-driven differentiation",
+    "carbon capture and storage",
+    "portfolio optimization"
+  ],
+  "notable_shift": "Exxon Mobil Corporation is seeing increased interest from hyperscalers in its carbon capture and storage solutions for data centers, with serious and substantive conversations underway.",
+  "confidence": "high",
+  "model_label": "confident",
+  "_source": {
+    "word_count": 9225,
+    "segments": 72,
+    "attempts": 2,
+    "retry_reasons": [
+      "attempt 1: APITimeoutError"
+    ]
+  }
+}

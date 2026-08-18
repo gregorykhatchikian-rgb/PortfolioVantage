@@ -1,0 +1,22 @@
+{
+  "ticker": "CRM",
+  "quarter": "2026Q2",
+  "sentiment_score": 0.8,
+  "sentiment_label": "very confident",
+  "themes": [
+    "agentic enterprise",
+    "ai adoption",
+    "data cloud growth",
+    "it service management",
+    "public sector expansion"
+  ],
+  "notable_shift": "Management's tone and emphasis on the Agentic enterprise and AI adoption have become even more bullish, with a focus on the transformative impact on customers and the company's own operations.",
+  "confidence": "high",
+  "model_label": "very confident",
+  "_source": {
+    "word_count": 5891,
+    "segments": 38,
+    "attempts": 1,
+    "retry_reasons": []
+  }
+}

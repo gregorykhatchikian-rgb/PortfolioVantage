@@ -1,0 +1,22 @@
+{
+  "ticker": "PG",
+  "quarter": "2026Q1",
+  "sentiment_score": 0.55,
+  "sentiment_label": "confident",
+  "themes": [
+    "restructuring efforts",
+    "innovation investments",
+    "competitive environment",
+    "pricing strategy",
+    "china market growth"
+  ],
+  "notable_shift": "Management's tone shifted from cautious to confident as they discussed the company's progress in China and the effectiveness of their restructuring efforts.",
+  "confidence": "medium",
+  "model_label": "confident",
+  "_source": {
+    "word_count": 8547,
+    "segments": 42,
+    "attempts": 1,
+    "retry_reasons": []
+  }
+}

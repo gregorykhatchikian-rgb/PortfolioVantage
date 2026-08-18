@@ -1,0 +1,24 @@
+{
+  "ticker": "MSFT",
+  "quarter": "2026Q2",
+  "sentiment_score": 0.75,
+  "sentiment_label": "very confident",
+  "themes": [
+    "ai adoption",
+    "cloud growth",
+    "gpu investments",
+    "microsoft 365 momentum"
+  ],
+  "notable_shift": "Management's emphasis on the long-term value of their investments in AI and cloud infrastructure, despite short-term concerns about capital expenditures and ROI.",
+  "confidence": "high",
+  "model_label": "confident",
+  "_source": {
+    "word_count": 7141,
+    "segments": 39,
+    "attempts": 3,
+    "retry_reasons": [
+      "attempt 1: APITimeoutError",
+      "attempt 2: APITimeoutError"
+    ]
+  }
+}

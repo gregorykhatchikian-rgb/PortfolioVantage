@@ -1,0 +1,24 @@
+{
+  "ticker": "TSLA",
+  "quarter": "2026Q2",
+  "sentiment_score": 0.65,
+  "sentiment_label": "very confident",
+  "themes": [
+    "optimus production",
+    "robotaxi growth",
+    "ai capex",
+    "energy storage demand",
+    "supply chain constraints"
+  ],
+  "notable_shift": "Management's tone on Optimus production has shifted from overly optimistic to more cautious, emphasizing the challenges of scaling production and the need for a more gradual ramp-up.",
+  "confidence": "high",
+  "model_label": "confident",
+  "_source": {
+    "word_count": 7371,
+    "segments": 51,
+    "attempts": 2,
+    "retry_reasons": [
+      "attempt 1: APITimeoutError"
+    ]
+  }
+}

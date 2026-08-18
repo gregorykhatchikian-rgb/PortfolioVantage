@@ -1,0 +1,20 @@
+{
+  "ticker": "CRM",
+  "quarter": "2026Q1",
+  "sentiment_score": 0.8,
+  "sentiment_label": "very confident",
+  "themes": [
+    "ai adoption",
+    "data cloud growth",
+    "agentforce momentum"
+  ],
+  "notable_shift": "Management's tone shifted towards increased confidence in the company's AI-driven growth strategy, with a focus on accelerating distribution and expanding capacity in high-growth areas.",
+  "confidence": "high",
+  "model_label": "confident",
+  "_source": {
+    "word_count": 4924,
+    "segments": 41,
+    "attempts": 1,
+    "retry_reasons": []
+  }
+}

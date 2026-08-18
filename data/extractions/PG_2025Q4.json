@@ -1,0 +1,21 @@
+{
+  "ticker": "PG",
+  "quarter": "2025Q4",
+  "sentiment_score": 0.55,
+  "sentiment_label": "confident",
+  "themes": [
+    "tariff uncertainty",
+    "category growth slowdown",
+    "restructuring efforts",
+    "innovation pipeline"
+  ],
+  "notable_shift": "Management's tone shifted towards a more cautious outlook for category growth and a greater emphasis on creating their own tailwinds through innovation and restructuring efforts.",
+  "confidence": "medium",
+  "model_label": "confident",
+  "_source": {
+    "word_count": 9876,
+    "segments": 71,
+    "attempts": 1,
+    "retry_reasons": []
+  }
+}

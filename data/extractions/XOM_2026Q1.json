@@ -1,0 +1,21 @@
+{
+  "ticker": "XOM",
+  "quarter": "2026Q1",
+  "sentiment_score": 0.65,
+  "sentiment_label": "very confident",
+  "themes": [
+    "middle east conflict",
+    "lng supply",
+    "refining margins",
+    "permian growth"
+  ],
+  "notable_shift": "Management's tone shifted from cautious to confident as they highlighted the company's ability to navigate the Middle East conflict and capitalize on opportunities in LNG and refining.",
+  "confidence": "high",
+  "model_label": "confident",
+  "_source": {
+    "word_count": 7426,
+    "segments": 54,
+    "attempts": 1,
+    "retry_reasons": []
+  }
+}

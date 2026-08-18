@@ -1,0 +1,22 @@
+{
+  "ticker": "AAPL",
+  "quarter": "2026Q2",
+  "sentiment_score": 0.8,
+  "sentiment_label": "very confident",
+  "themes": [
+    "supply constraints",
+    "ai investments",
+    "macbook neo",
+    "services growth",
+    "memory costs"
+  ],
+  "notable_shift": "Apple's CEO transition and the company's increasing focus on AI investments and services growth.",
+  "confidence": "high",
+  "model_label": "confident",
+  "_source": {
+    "word_count": 8036,
+    "segments": 58,
+    "attempts": 1,
+    "retry_reasons": []
+  }
+}

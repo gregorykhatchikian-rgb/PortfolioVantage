@@ -1,0 +1,20 @@
+{
+  "ticker": "AAPL",
+  "quarter": "2025Q4",
+  "sentiment_score": 0.85,
+  "sentiment_label": "very confident",
+  "themes": [
+    "iphone demand",
+    "ai investments",
+    "services growth"
+  ],
+  "notable_shift": "Management's tone shifted to emphasize the strength of the iPhone 17 lineup and the company's investments in AI, while also highlighting the challenges in the Mac segment due to tough comparisons.",
+  "confidence": "high",
+  "model_label": "very confident",
+  "_source": {
+    "word_count": 7000,
+    "segments": 71,
+    "attempts": 1,
+    "retry_reasons": []
+  }
+}

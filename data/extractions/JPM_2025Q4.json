@@ -1,0 +1,20 @@
+{
+  "ticker": "JPM",
+  "quarter": "2025Q4",
+  "sentiment_score": 0.55,
+  "sentiment_label": "confident",
+  "themes": [
+    "loan growth",
+    "regulatory pressures",
+    "technology investments"
+  ],
+  "notable_shift": "Management's tone on credit card interest rate caps and potential regulatory changes has become more cautious.",
+  "confidence": "medium",
+  "model_label": "confident",
+  "_source": {
+    "word_count": 10763,
+    "segments": 75,
+    "attempts": 1,
+    "retry_reasons": []
+  }
+}

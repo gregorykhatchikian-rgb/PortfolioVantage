@@ -1,0 +1,21 @@
+{
+  "ticker": "JPM",
+  "quarter": "2026Q2",
+  "sentiment_score": 0.65,
+  "sentiment_label": "very confident",
+  "themes": [
+    "ai adoption",
+    "regulatory stability",
+    "credit underwriting",
+    "deposit growth"
+  ],
+  "notable_shift": "Management's tone on AI adoption has shifted from cautious to optimistic, with a focus on its potential to drive efficiency and improve customer experience.",
+  "confidence": "high",
+  "model_label": "confident",
+  "_source": {
+    "word_count": 11219,
+    "segments": 105,
+    "attempts": 1,
+    "retry_reasons": []
+  }
+}
