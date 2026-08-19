@@ -135,3 +135,38 @@ def keyword_frequency(points: list[SeriesPoint], min_len: int = 3) -> list[tuple
                 if len(word) >= min_len and word not in stop:
                     counts[word].add(p.ticker)
     return sorted(((w, len(ts)) for w, ts in counts.items()), key=lambda x: (-x[1], x[0]))
+
+
+def consecutive_declines(series: list[SeriesPoint]) -> int:
+    """How many consecutive quarter-over-quarter declines end the series.
+
+    plan.md Phase 5 defines the watch-list flag as 2+ consecutive declines. Note
+    this counts direction only, not magnitude: a -0.05 drift counts the same as
+    -0.40. Whether a decline is larger than this pipeline's run-to-run noise is a
+    separate question, and callers should surface it rather than imply precision.
+    """
+    if len(series) < 2:
+        return 0
+    count = 0
+    for older, newer in zip(reversed(series[:-1]), reversed(series)):
+        if newer.sentiment_score < older.sentiment_score:
+            count += 1
+        else:
+            break
+    return count
+
+
+def total_change(series: list[SeriesPoint]) -> float:
+    return series[-1].sentiment_score - series[0].sentiment_score if len(series) > 1 else 0.0
+
+
+def theme_matrix(points: list[SeriesPoint], top_n: int = 12):
+    """Theme x ticker counts as a DataFrame, for the portfolio heatmap."""
+    import pandas as pd
+
+    rows = theme_frequency(points)[:top_n]
+    themes = [r[0] for r in rows]
+    tickers = sorted({p.ticker for p in points})
+    grid = {tk: [sum(1 for p in points if p.ticker == tk and th in p.themes) for th in themes]
+            for tk in tickers}
+    return pd.DataFrame(grid, index=themes)

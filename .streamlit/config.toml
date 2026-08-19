@@ -1,0 +1,10 @@
+# Dark, data-dense trading-desk feel, per ui-design-brief.md
+[theme]
+base = "dark"
+primaryColor = "#4c8bf5"
+backgroundColor = "#0e1117"
+secondaryBackgroundColor = "#161a23"
+textColor = "#e6e6e6"
+
+[server]
+headless = true
