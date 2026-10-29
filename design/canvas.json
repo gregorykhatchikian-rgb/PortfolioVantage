@@ -1,0 +1,10 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html", "x": 0, "y": 0, "w": 1440, "h": 1240, "title": "Dashboard" },
+    { "file": "States.dc.html", "x": 1540, "y": 0, "w": 660, "h": 560, "title": "Component states" }
+  ],
+  "annotations": [
+    { "id": "data-note", "x": 1540, "y": 620, "w": 300, "text": "Every number here is real output from the pipeline — 24 earnings calls, 8 holdings, 3 quarters each.\n\nClick any row in the holdings table to switch the detail panel." }
+  ],
+  "launch": { "view": "canvas" }
+}

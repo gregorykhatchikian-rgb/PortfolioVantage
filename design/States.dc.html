@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+  <style>
+    body { margin: 0; background: #0b0e14; color: #e6e9ef;
+           font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+           -webkit-font-smoothing: antialiased; }
+    a { color: #4c8bf5; text-decoration: none; }
+    a:hover { color: #7aa9f8; }
+    .mono { font-family: "IBM Plex Mono", ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+    .lbl { font-size: 10px; letter-spacing: 0.11em; text-transform: uppercase; color: #6b7488; font-weight: 500; }
+  </style>
+</helmet>
+
+<div style="display: flex; flex-direction: column; gap: 20px; padding: 24px; width: 660px; box-sizing: border-box; background: #0b0e14;">
+
+  <div style="display: flex; flex-direction: column; gap: 4px;">
+    <div style="font-size: 15px; font-weight: 600;">Component states</div>
+    <div style="font-size: 12px; color: #7d8698; text-wrap: pretty;">The live portfolio has nothing on watch, so the alert state would otherwise go undesigned.</div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 9px;">
+    <div class="lbl">Watch-list callout</div>
+    <sc-for list="{{callouts}}" as="c" hint-placeholder-count="2">
+      <div style="display: flex; align-items: center; gap: 12px; padding: 11px 15px; border: 1px solid {{c.border}}; border-left: 3px solid {{c.accent}}; border-radius: 3px; background: {{c.bg}};">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="{{c.accent}}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2 L22 20 H2 Z"></path><path d="M12 9 v5"></path><path d="M12 17.5 v.01"></path>
+        </svg>
+        <div style="font-size: 13px; font-weight: 500;">{{c.title}}</div>
+        <div style="font-size: 12.5px; color: #7d8698;">{{c.detail}}</div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 9px;">
+    <div class="lbl">Sentiment bands</div>
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px;">
+      <sc-for list="{{bands}}" as="b" hint-placeholder-count="6">
+        <div style="border: 1px solid #1e2430; border-radius: 3px; background: #12161f; padding: 10px 12px; display: flex; flex-direction: column; gap: 5px;">
+          <div class="mono" style="font-size: 16px; font-weight: 600; color: {{b.color}};">{{b.range}}</div>
+          <div style="font-size: 11.5px; color: #a9b2c4;">{{b.label}}</div>
+          <div style="font-size: 10.5px; color: #5b6478;">{{b.seen}}</div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="font-size: 11px; color: #5b6478; line-height: 1.5; text-wrap: pretty;">Colour marks direction of change, never the absolute level — every observed score in this portfolio sits in the top three bands.</div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 9px;">
+    <div class="lbl">Trend indicator</div>
+    <div style="display: flex; gap: 22px;">
+      <sc-for list="{{trends}}" as="t" hint-placeholder-count="3">
+        <div style="display: flex; align-items: center; gap: 7px;">
+          <span class="mono" style="font-size: 12.5px; color: {{t.color}};">{{t.value}}</span>
+          <svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="{{t.color}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate({{t.rot}}deg);">
+            <path d="M6 10 V2"></path><path d="M2.5 5.5 L6 2 L9.5 5.5"></path>
+          </svg>
+          <span style="font-size: 12px; color: #7d8698;">{{t.name}}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  renderVals() {
+    const UP = "#3fb37f", DOWN = "#e5534b", FLAT = "#7d8698";
+    return {
+      callouts: [
+        { title: "No holding on watch", detail: "Nothing declined two or more consecutive quarters.", accent: UP, border: "#1e2430", bg: "#111821" },
+        { title: "2 holdings on watch", detail: "MSFT, XOM declined two or more consecutive quarters", accent: DOWN, border: "#3a2028", bg: "#1a1216" },
+      ],
+      bands: [
+        { range: "0.65 — 1.0", label: "very confident", seen: "17 of 24 calls", color: "#c9d3e4" },
+        { range: "0.40 — 0.65", label: "confident", seen: "7 of 24 calls", color: "#c9d3e4" },
+        { range: "0.10 — 0.40", label: "steady", seen: "none observed", color: "#6b7488" },
+        { range: "−0.40 — 0.10", label: "cautious", seen: "none observed", color: "#6b7488" },
+        { range: "−0.65 — −0.40", label: "defensive", seen: "none observed", color: "#6b7488" },
+        { range: "−1.0 — −0.65", label: "alarmed", seen: "none observed", color: "#6b7488" },
+      ],
+      trends: [
+        { value: "+0.10", name: "improving", color: UP, rot: 0 },
+        { value: "−0.15", name: "deteriorating", color: DOWN, rot: 180 },
+        { value: "0.00", name: "flat", color: FLAT, rot: 90 },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

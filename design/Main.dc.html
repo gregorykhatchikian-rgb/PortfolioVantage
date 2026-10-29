@@ -1,0 +1,357 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+  <style>
+    body { margin: 0; background: #0b0e14; color: #e6e9ef;
+           font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+           -webkit-font-smoothing: antialiased; }
+    a { color: #4c8bf5; text-decoration: none; }
+    a:hover { color: #7aa9f8; }
+    .mono { font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+            font-variant-numeric: tabular-nums; }
+    .lbl { font-size: 10px; letter-spacing: 0.11em; text-transform: uppercase;
+           color: #6b7488; font-weight: 500; }
+    .row:hover { background: #161c28 !important; }
+  </style>
+</helmet>
+
+<div style="display: flex; flex-direction: column; gap: 14px; padding: 22px 26px 26px; width: 1440px; box-sizing: border-box; background: #0b0e14;">
+
+  <!-- header -->
+  <div style="display: flex; align-items: flex-end; justify-content: space-between; border-bottom: 1px solid #1e2430; padding-bottom: 14px;">
+    <div style="display: flex; flex-direction: column; gap: 5px;">
+      <div style="font-size: 21px; font-weight: 600; letter-spacing: -0.015em;">Portfolio Earnings Trend Analyzer</div>
+      <div style="font-size: 12.5px; color: #7d8698;">Management sentiment extracted from earnings call transcripts, by holding</div>
+    </div>
+    <div style="display: flex; gap: 30px; align-items: flex-end;">
+      <sc-for list="{{stats}}" as="s" hint-placeholder-count="3">
+        <div style="display: flex; flex-direction: column; gap: 3px; align-items: flex-end;">
+          <div class="lbl">{{s.label}}</div>
+          <div class="mono" style="font-size: 17px; font-weight: 500;">{{s.value}}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- watch list -->
+  <div style="display: flex; align-items: center; gap: 12px; padding: 11px 15px; border: 1px solid {{watch.border}}; border-left: 3px solid {{watch.accent}}; border-radius: 3px; background: {{watch.bg}};">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="{{watch.accent}}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 2 L22 20 H2 Z"></path><path d="M12 9 v5"></path><path d="M12 17.5 v.01"></path>
+    </svg>
+    <div style="font-size: 13px; font-weight: 500;">{{watch.title}}</div>
+    <div style="font-size: 12.5px; color: #7d8698;">{{watch.detail}}</div>
+  </div>
+
+  <!-- main grid -->
+  <div style="display: grid; grid-template-columns: 620px minmax(0, 1fr); gap: 14px;">
+
+    <!-- holdings -->
+    <div style="border: 1px solid #1e2430; border-radius: 3px; background: #12161f; overflow: hidden;">
+      <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 15px 10px;">
+        <div class="lbl">Holdings</div>
+        <div style="font-size: 11px; color: #6b7488;">select a row</div>
+      </div>
+      <div style="display: grid; grid-template-columns: 62px 52px 1fr 66px 74px 52px; gap: 0; padding: 0 15px 7px; border-bottom: 1px solid #1e2430;">
+        <div class="lbl">Ticker</div>
+        <div class="lbl" style="text-align: right;">Wt</div>
+        <div class="lbl" style="text-align: right; padding-right: 12px;">3q trend</div>
+        <div class="lbl" style="text-align: right;">Latest</div>
+        <div class="lbl" style="text-align: right;">Change</div>
+        <div class="lbl" style="text-align: right;">Conf</div>
+      </div>
+      <sc-for list="{{holdings}}" as="h" hint-placeholder-count="8">
+        <div class="row" onClick="{{h.pick}}" style="display: grid; grid-template-columns: 62px 52px 1fr 66px 74px 52px; align-items: center; gap: 0; padding: 9px 15px; cursor: pointer; border-bottom: 1px solid #171c26; background: {{h.rowBg}}; border-left: 2px solid {{h.rowMark}};">
+          <div class="mono" style="font-size: 13px; font-weight: 600; color: {{h.tickerColor}};">{{h.ticker}}</div>
+          <div class="mono" style="font-size: 12px; color: #7d8698; text-align: right;">{{h.weight}}</div>
+          <div style="display: flex; justify-content: flex-end; padding-right: 12px;">
+            <svg width="96" height="24" viewBox="0 0 96 24" fill="none">
+              <polyline points="{{h.spark}}" stroke="{{h.dirColor}}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></polyline>
+              <circle cx="{{h.sparkCx}}" cy="{{h.sparkCy}}" r="2.4" fill="{{h.dirColor}}"></circle>
+            </svg>
+          </div>
+          <div class="mono" style="font-size: 13.5px; text-align: right; font-weight: 500;">{{h.latest}}</div>
+          <div class="mono" style="font-size: 12.5px; text-align: right; color: {{h.dirColor}}; display: flex; align-items: center; justify-content: flex-end; gap: 5px;">
+            <span>{{h.change}}</span>
+            <svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="{{h.dirColor}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate({{h.arrowRot}}deg);">
+              <path d="M6 10 V2"></path><path d="M2.5 5.5 L6 2 L9.5 5.5"></path>
+            </svg>
+          </div>
+          <div class="mono" style="font-size: 11px; text-align: right; color: {{h.confColor}};">{{h.conf}}</div>
+        </div>
+      </sc-for>
+    </div>
+
+    <!-- detail -->
+    <div style="display: flex; flex-direction: column; gap: 14px;">
+      <div style="border: 1px solid #1e2430; border-radius: 3px; background: #12161f; padding: 15px 18px 6px;">
+        <div style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 4px;">
+          <div style="display: flex; align-items: baseline; gap: 13px;">
+            <div class="mono" style="font-size: 22px; font-weight: 600; letter-spacing: -0.01em;">{{sel.ticker}}</div>
+            <div style="font-size: 12.5px; color: #7d8698;">{{sel.shares}} shares · {{sel.weight}} of portfolio</div>
+          </div>
+          <div style="display: flex; align-items: baseline; gap: 9px;">
+            <div class="mono" style="font-size: 26px; font-weight: 600; color: {{sel.dirColor}}; letter-spacing: -0.02em;">{{sel.latest}}</div>
+            <div style="font-size: 12px; color: #7d8698; text-transform: uppercase; letter-spacing: 0.07em;">{{sel.label}}</div>
+          </div>
+        </div>
+        <svg width="100%" height="206" viewBox="0 0 760 206" fill="none" style="display: block;">
+          <sc-for list="{{grid}}" as="g" hint-placeholder-count="5">
+            <line x1="46" y1="{{g.y}}" x2="742" y2="{{g.y}}" stroke="{{g.stroke}}" stroke-width="1" stroke-dasharray="{{g.dash}}"></line>
+            <text x="38" y="{{g.ty}}" fill="#5b6478" font-size="10" text-anchor="end" font-family="IBM Plex Mono, monospace">{{g.label}}</text>
+          </sc-for>
+          <polyline points="{{sel.linePoints}}" stroke="{{sel.dirColor}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline>
+          <sc-for list="{{sel.points}}" as="p" hint-placeholder-count="3">
+            <circle cx="{{p.x}}" cy="{{p.y}}" r="4" fill="#12161f" stroke="{{sel.dirColor}}" stroke-width="2"></circle>
+            <text x="{{p.x}}" y="{{p.vy}}" fill="#e6e9ef" font-size="11.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-weight="500">{{p.score}}</text>
+            <text x="{{p.x}}" y="198" fill="#7d8698" font-size="10.5" text-anchor="middle" font-family="IBM Plex Sans, sans-serif">{{p.period}}</text>
+          </sc-for>
+        </svg>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <sc-for list="{{sel.quarters}}" as="q" hint-placeholder-count="3">
+          <div style="border: 1px solid #1e2430; border-radius: 3px; background: #12161f; padding: 11px 14px; display: flex; flex-direction: column; gap: 7px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <div class="mono" style="font-size: 12.5px; font-weight: 500; min-width: 66px;">{{q.period}}</div>
+              <div class="mono" style="font-size: 11px; color: #5b6478;">{{q.quarter}}</div>
+              <div class="mono" style="font-size: 12.5px; font-weight: 600; color: {{q.scoreColor}}; margin-left: auto;">{{q.score}}</div>
+            </div>
+            <div style="display: flex; flex-wrap: wrap; gap: 5px;">
+              <sc-for list="{{q.themes}}" as="t" hint-placeholder-count="4">
+                <div style="font-size: 11.5px; color: #a9b2c4; background: #1a2130; border: 1px solid #232b3a; border-radius: 2px; padding: 2px 7px;">{{t}}</div>
+              </sc-for>
+            </div>
+            <div style="font-size: 12px; color: #8b93a5; line-height: 1.5; text-wrap: pretty;">{{q.shift}}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <!-- themes -->
+  <div style="display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 14px;">
+    <div style="border: 1px solid #1e2430; border-radius: 3px; background: #12161f; padding: 13px 16px 15px;">
+      <div style="display: flex; align-items: baseline; gap: 11px; margin-bottom: 12px;">
+        <div class="lbl">Themes across the portfolio</div>
+        <div style="font-size: 11.5px; color: #6b7488;">mentions per holding, 3 quarters</div>
+      </div>
+      <div style="display: grid; grid-template-columns: 210px repeat(8, minmax(0, 1fr)); gap: 3px; align-items: center;">
+        <div></div>
+        <sc-for list="{{tickers}}" as="tk" hint-placeholder-count="8">
+          <div class="mono" style="font-size: 10.5px; color: #6b7488; text-align: center;">{{tk}}</div>
+        </sc-for>
+        <sc-for list="{{heat}}" as="r" hint-placeholder-count="12">
+          <div style="font-size: 11.5px; color: #a9b2c4; padding-right: 9px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{r.theme}}</div>
+          <sc-for list="{{r.cells}}" as="c" hint-placeholder-count="8">
+            <div class="mono" style="height: 21px; border-radius: 2px; background: {{c.bg}}; color: {{c.fg}}; font-size: 10.5px; display: flex; align-items: center; justify-content: center;">{{c.text}}</div>
+          </sc-for>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="border: 1px solid #1e2430; border-radius: 3px; background: #12161f; padding: 13px 16px 15px;">
+      <div class="lbl" style="margin-bottom: 12px;">Shared language</div>
+      <div style="display: flex; flex-direction: column; gap: 7px;">
+        <sc-for list="{{keywords}}" as="k" hint-placeholder-count="6">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="font-size: 12px; color: #a9b2c4; min-width: 88px;">{{k.word}}</div>
+            <div style="flex-grow: 1; height: 5px; background: #1a2130; border-radius: 2px; overflow: hidden;">
+              <div style="width: {{k.pct}}; height: 5px; background: #4c8bf5; opacity: 0.72;"></div>
+            </div>
+            <div class="mono" style="font-size: 11px; color: #6b7488;">{{k.n}}</div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="font-size: 11px; color: #5b6478; line-height: 1.5; margin-top: 13px; text-wrap: pretty;">Word level, so “ai capex” and “ai adoption” count as one trend. Exact theme strings rarely repeat across companies.</div>
+    </div>
+  </div>
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"accent":{"editor":"color","default":"#4c8bf5","options":["#4c8bf5","#8b7cf6","#e0a458","#5eaab5"]},"density":{"editor":"enum","default":"comfortable","options":["comfortable","compact"]}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { picked: "XOM" };
+  }
+
+  data() {
+    return [
+      { t: "AAPL", sh: 50, w: 0.15, h: [
+        { p: "Sep 2025", q: "2025Q4", s: 0.85, l: "very confident", c: "high", th: ["iphone demand", "ai investments", "services growth"], n: "Tone shifted to emphasise the strength of the iPhone 17 lineup and AI investment, while flagging tough comparisons in the Mac segment." },
+        { p: "Dec 2025", q: "2026Q1", s: 0.85, l: "very confident", c: "high", th: ["record revenue", "iphone strength", "ai initiatives", "supply chain constraints"], n: "Optimistic despite supply chain constraints, with a focus on the ability to innovate and drive growth." },
+        { p: "Mar 2026", q: "2026Q2", s: 0.80, l: "very confident", c: "high", th: ["supply constraints", "ai investments", "macbook neo", "services growth", "memory costs"], n: "Announced CEO transition to John Ternus in September, and dropped net cash neutral as a formal target." } ] },
+      { t: "NVDA", sh: 30, w: 0.22, h: [
+        { p: "Jan 2025", q: "2025Q4", s: 0.85, l: "very confident", c: "high", th: ["ai adoption", "blackwell ramp", "reasoning ai", "inference scaling"], n: "Framed the quarter as the beginning of a new era in AI, with strong growth prospects driven by reasoning models." },
+        { p: "Apr 2025", q: "2026Q1", s: 0.85, l: "very confident", c: "high", th: ["ai inference growth", "blackwell ramp", "sovereign ai", "enterprise ai", "industrial ai"], n: "Tone moved from cautious to very confident, highlighting position in the AI market and growth prospects." },
+        { p: "Jul 2025", q: "2026Q2", s: 0.80, l: "very confident", c: "high", th: ["ai infrastructure growth", "blackwell adoption", "rubin platform development", "data center expansion", "geopolitical issues"], n: "Increased confidence in AI infrastructure growth on Blackwell adoption, with geopolitical exposure newly raised." } ] },
+      { t: "MSFT", sh: 40, w: 0.14, h: [
+        { p: "Jun 2025", q: "2025Q4", s: 0.80, l: "very confident", c: "high", th: ["ai adoption", "cloud growth", "microsoft 365 momentum", "azure expansion", "ai infrastructure investment"], n: "Emphasised leadership in AI and cloud with a long-term growth framing, while acknowledging near-term challenges." },
+        { p: "Sep 2025", q: "2026Q1", s: 0.80, l: "very confident", c: "high", th: ["ai adoption", "cloud growth", "capacity constraints", "investment in ai"], n: "Increased confidence in AI adoption driving growth, while acknowledging capacity constraints." },
+        { p: "Dec 2025", q: "2026Q2", s: 0.75, l: "very confident", c: "high", th: ["ai adoption", "cloud growth", "gpu investments", "microsoft 365 momentum"], n: "Stressed the long-term value of AI and cloud infrastructure investment against short-term concern about capital expenditure." } ] },
+      { t: "JPM", sh: 65, w: 0.12, h: [
+        { p: "Dec 2025", q: "2025Q4", s: 0.55, l: "confident", c: "medium", th: ["loan growth", "regulatory pressures", "technology investments"], n: "More cautious on credit card interest rate caps and potential regulatory changes." },
+        { p: "Mar 2026", q: "2026Q1", s: 0.55, l: "confident", c: "high", th: ["basel iii capital proposal", "private credit", "ai and digital assets"], n: "More critical on the Basel III capital proposal and G-SIB surcharge, emphasising the potential negative impact on the bank." },
+        { p: "Jun 2026", q: "2026Q2", s: 0.65, l: "very confident", c: "high", th: ["ai adoption", "regulatory stability", "credit underwriting", "deposit growth"], n: "Tone on AI adoption moved from cautious to optimistic, focused on efficiency and customer experience." } ] },
+      { t: "XOM", sh: 120, w: 0.09, h: [
+        { p: "Dec 2025", q: "2025Q4", s: 0.80, l: "very confident", c: "high", th: ["upstream growth", "technology-driven differentiation", "carbon capture and storage", "portfolio optimization"], n: "Reported serious interest from hyperscalers in carbon capture and storage solutions for data centres." },
+        { p: "Mar 2026", q: "2026Q1", s: 0.65, l: "very confident", c: "high", th: ["middle east conflict", "lng supply", "refining margins", "permian growth"], n: "Middle East conflict enters the commentary as a named risk alongside LNG supply and refining margins." },
+        { p: "Jun 2026", q: "2026Q2", s: 0.65, l: "very confident", c: "high", th: ["middle east conflict", "guyana production", "refining margins", "permian growth"], n: "Optimistic despite global disruptions, with a focus on execution and long-term value creation." } ] },
+      { t: "PG", sh: 55, w: 0.08, h: [
+        { p: "Jun 2025", q: "2025Q4", s: 0.55, l: "confident", c: "medium", th: ["tariff uncertainty", "category growth slowdown", "restructuring efforts", "innovation pipeline"], n: "More cautious outlook for category growth, with greater emphasis on creating their own tailwinds through innovation." },
+        { p: "Sep 2025", q: "2026Q1", s: 0.55, l: "confident", c: "medium", th: ["restructuring efforts", "innovation investments", "competitive environment", "pricing strategy", "china market growth"], n: "Moved from cautious to confident on progress in China and the effectiveness of restructuring." },
+        { p: "Dec 2025", q: "2026Q2", s: 0.55, l: "confident", c: "medium", th: ["restructuring and reinvention", "innovation and product improvement", "media and retail landscape changes"], n: "Confident on reinvention and growth opportunities after three quarters of restructuring language." } ] },
+      { t: "TSLA", sh: 25, w: 0.11, h: [
+        { p: "Dec 2025", q: "2025Q4", s: 0.65, l: "very confident", c: "high", th: ["autonomous vehicles", "optimus robots", "chip production", "energy growth"], n: "Framed a shift from traditional car sales toward transportation as a service, weighted to autonomy." },
+        { p: "Mar 2026", q: "2026Q1", s: 0.65, l: "very confident", c: "high", th: ["ai capex", "optimus production", "fsd adoption", "battery pack capacity", "tera fab"], n: "Increasing investment in AI and autonomy, with a significant rise in capital expenditure expected in 2026." },
+        { p: "Jun 2026", q: "2026Q2", s: 0.65, l: "very confident", c: "high", th: ["optimus production", "robotaxi growth", "ai capex", "energy storage demand", "supply chain constraints"], n: "Tone on Optimus production moved from overly optimistic to more cautious on the challenges of scaling." } ] },
+      { t: "CRM", sh: 35, w: 0.09, h: [
+        { p: "Jan 2025", q: "2025Q4", s: 0.80, l: "very confident", c: "high", th: ["agentforce adoption", "digital labor revolution", "data cloud growth"], n: "Increased confidence in Agentforce driving growth, framed around the trinity of apps, data and agents." },
+        { p: "Apr 2025", q: "2026Q1", s: 0.80, l: "very confident", c: "high", th: ["ai adoption", "data cloud growth", "agentforce momentum"], n: "Increased confidence in the AI-driven growth strategy, accelerating distribution and expanding capacity." },
+        { p: "Jul 2025", q: "2026Q2", s: 0.80, l: "very confident", c: "high", th: ["agentic enterprise", "ai adoption", "data cloud growth", "it service management", "public sector expansion"], n: "More bullish on the agentic enterprise, citing transformative impact on customers and internal operations." } ] },
+    ];
+  }
+
+  heatRows() {
+    return [
+      ["ai adoption", [0, 1, 3, 1, 0, 0, 0, 2]],
+      ["data cloud growth", [0, 0, 0, 0, 0, 0, 0, 3]],
+      ["cloud growth", [0, 0, 3, 0, 0, 0, 0, 0]],
+      ["ai investments", [2, 0, 0, 0, 0, 0, 0, 0]],
+      ["supply chain constraints", [1, 0, 0, 0, 0, 0, 1, 0]],
+      ["blackwell ramp", [0, 2, 0, 0, 0, 0, 0, 0]],
+      ["microsoft 365 momentum", [0, 0, 2, 0, 0, 0, 0, 0]],
+      ["middle east conflict", [0, 0, 0, 0, 2, 0, 0, 0]],
+      ["permian growth", [0, 0, 0, 0, 2, 0, 0, 0]],
+      ["refining margins", [0, 0, 0, 0, 2, 0, 0, 0]],
+      ["optimus production", [0, 0, 0, 0, 0, 0, 2, 0]],
+      ["ai capex", [0, 0, 0, 0, 0, 0, 2, 0]],
+    ];
+  }
+
+  fmt(v) { return (v > 0 ? "+" : v < 0 ? "−" : "") + Math.abs(v).toFixed(2); }
+
+  renderVals() {
+    const accent = this.props.accent ?? "#4c8bf5";
+    const compact = (this.props.density ?? "comfortable") === "compact";
+    const UP = "#3fb37f", DOWN = "#e5534b", FLAT = "#7d8698";
+    const rows = this.data();
+    const order = rows.map((r) => r.t);
+    const picked = this.state.picked;
+
+    const holdings = rows.map((r) => {
+      const first = r.h[0].s, last = r.h[r.h.length - 1].s;
+      const delta = Math.round((last - first) * 100) / 100;
+      const dirColor = delta > 0.001 ? UP : delta < -0.001 ? DOWN : FLAT;
+      const xs = r.h.map((_, i) => 6 + i * (84 / (r.h.length - 1)));
+      const ys = r.h.map((p) => 12 - (p.s - 0.7) * 26);
+      const on = r.t === picked;
+      return {
+        ticker: r.t,
+        weight: (r.w * 100).toFixed(0) + "%",
+        latest: last.toFixed(2),
+        change: this.fmt(delta),
+        conf: r.h[r.h.length - 1].c,
+        confColor: r.h[r.h.length - 1].c === "high" ? "#7d8698" : "#5b6478",
+        dirColor,
+        arrowRot: delta > 0.001 ? 0 : delta < -0.001 ? 180 : 90,
+        spark: xs.map((x, i) => x + "," + Math.max(3, Math.min(21, ys[i]))).join(" "),
+        sparkCx: xs[xs.length - 1],
+        sparkCy: Math.max(3, Math.min(21, ys[ys.length - 1])),
+        rowBg: on ? "#161d2b" : "transparent",
+        rowMark: on ? accent : "transparent",
+        tickerColor: on ? accent : "#e6e9ef",
+        pick: () => this.setState({ picked: r.t }),
+      };
+    });
+
+    const row = rows.find((r) => r.t === picked) ?? rows[0];
+    const first = row.h[0].s, last = row.h[row.h.length - 1].s;
+    const delta = last - first;
+    const dirColor = delta > 0.001 ? UP : delta < -0.001 ? DOWN : FLAT;
+
+    const X0 = 46, X1 = 742, TOP = 22, BOT = 176;
+    const y = (s) => TOP + ((1 - s) / 2) * (BOT - TOP);
+    const pts = row.h.map((p, i) => {
+      const x = X0 + (i * (X1 - X0)) / (row.h.length - 1);
+      return { x, y: y(p.s), vy: y(p.s) - 13, score: p.s.toFixed(2), period: p.p };
+    });
+
+    const declines = (() => {
+      let n = 0;
+      for (let i = row.h.length - 1; i > 0; i--) {
+        if (row.h[i].s < row.h[i - 1].s) n++; else break;
+      }
+      return n;
+    })();
+
+    const flagged = rows.filter((r) => {
+      let n = 0;
+      for (let i = r.h.length - 1; i > 0; i--) {
+        if (r.h[i].s < r.h[i - 1].s) n++; else break;
+      }
+      return n >= 2;
+    });
+
+    const heat = this.heatRows().map(([theme, counts]) => ({
+      theme,
+      cells: counts.map((c) => ({
+        text: c === 0 ? "" : String(c),
+        bg: c === 0 ? "#151a24" : "rgba(76, 139, 245, " + (0.14 + c * 0.19) + ")",
+        fg: c === 0 ? "transparent" : "#dce6f8",
+      })),
+    }));
+
+    const kw = [["adoption", 5], ["investments", 4], ["constraints", 3], ["expansion", 3], ["supply", 3], ["capacity", 2], ["cloud", 2], ["demand", 2]];
+
+    const avg = rows.reduce((a, r) => a + r.h[r.h.length - 1].s, 0) / rows.length;
+
+    return {
+      accent,
+      tickers: order,
+      holdings,
+      heat,
+      keywords: kw.map(([word, n]) => ({ word, n, pct: (n / 8) * 100 + "%" })),
+      stats: [
+        { label: "Holdings", value: "8" },
+        { label: "Calls read", value: "24" },
+        { label: "Mean sentiment", value: avg.toFixed(2) },
+      ],
+      watch: flagged.length
+        ? { title: flagged.length + " holding(s) on watch", detail: flagged.map((f) => f.t).join(", ") + " declined two or more consecutive quarters", accent: DOWN, border: "#3a2028", bg: "#1a1216" }
+        : { title: "No holding on watch", detail: "Nothing has declined two or more consecutive quarters. XOM fell once, then held flat.", accent: UP, border: "#1e2430", bg: "#111821" },
+      grid: [1, 0.5, 0, -0.5, -1].map((v) => ({
+        y: y(v), ty: y(v) + 3.5, label: v.toFixed(1),
+        stroke: v === 0 ? "#2a3342" : "#1a202b",
+        dash: v === 0 ? "3 3" : "0",
+      })),
+      sel: {
+        ticker: row.t,
+        shares: row.sh,
+        weight: (row.w * 100).toFixed(0) + "%",
+        latest: last.toFixed(2),
+        label: row.h[row.h.length - 1].l,
+        dirColor,
+        declines,
+        points: pts,
+        linePoints: pts.map((p) => p.x + "," + p.y).join(" "),
+        quarters: [...row.h].reverse().map((p) => ({
+          period: p.p, quarter: p.q, score: p.s.toFixed(2),
+          scoreColor: p.s >= 0.65 ? "#c9d3e4" : "#a9b2c4",
+          themes: compact ? p.th.slice(0, 3) : p.th,
+          shift: p.n,
+        })),
+      },
+    };
+  }
+}
+</script>
+</body>
+</html>
