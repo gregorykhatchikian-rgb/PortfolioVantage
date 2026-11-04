@@ -7,6 +7,8 @@ the portfolio.
 Roughly 190,000 words of management commentary across 24 calls reduce to eight
 comparable trend lines and a theme heatmap.
 
+![Dashboard: 8 holdings with LLM-scored management sentiment, trend direction and confidence](docs/dashboard.png)
+
 ## Why
 
 Earnings numbers are reported instantly; the *language* around them is not. Hedged
